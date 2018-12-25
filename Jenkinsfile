@@ -20,11 +20,11 @@
 properties([buildDiscarder(logRotator(artifactNumToKeepStr: '5', numToKeepStr: env.BRANCH_NAME=='master'?'5':'1'))])
 
 def buildOs = 'linux'
-def buildJdk = '8'
-def buildMvn = '3.5.4'
+def buildJdk = '12'
+def buildMvn = '3.6.0'
 def runITsOses = ['linux', 'windows']
-def runITsJdks = ['7', '8', '11']
-def runITsMvn = '3.5.4'
+def runITsJdks = ['12']
+def runITsMvn = '3.6.0'
 def runITscommand = "mvn clean install -Prun-its,embedded -B -U -V" // -DmavenDistro=... -Dmaven.test.failure.ignore=true
 def tests
 
@@ -59,7 +59,7 @@ node(jenkinsEnv.nodeSelection(osNode)) {
             }
         }
 
-        tests = resolveScm source: [$class: 'GitSCMSource', credentialsId: '', id: '_', remote: 'https://gitbox.apache.org/repos/asf/maven-integration-testing.git', traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait'], [$class: 'GitToolSCMSourceTrait', gitTool: 'Default']]], targets: [BRANCH_NAME, 'master']
+        tests = resolveScm source: [$class: 'GitSCMSource', credentialsId: '', id: '_', remote: 'https://gitbox.apache.org/repos/asf/maven-integration-testing.git', traits: [[$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait'], [$class: 'GitToolSCMSourceTrait', gitTool: 'Default']]], targets: [BRANCH_NAME, 'MNG-6522']
     }
 }
 
